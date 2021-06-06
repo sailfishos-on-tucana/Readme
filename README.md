@@ -12,7 +12,7 @@ This is mainly for the vendor partition but any other device calibrations that c
 Next you can install this Lineage 17.1 build: https://forum.xda-developers.com/t/deprecated-rom-10-unofficial-tucana-lineageos17-1.4196085/
 (or use mine, https://1drv.ms/u/s!Alh0arVfv0RwirZ7aGrClFPS1kXTqw?e=7JhQVY - the only difference is that mine uses the OSS kernel, but we will replace this next).
 
-Next install the alpha release (that is, you get all the [issues](https://github.com/sailfishos-on-tucana/Readme/issues): 
+Next install the [alpha release](https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.0.1.48-alpha) (that is, you get all the [issues](https://github.com/sailfishos-on-tucana/Readme/issues): 
 You download the boot image and the bz2 file, install the img with twrp on the boot partition and for the bz2 do:
 ```
 #!/bin/bash -x
