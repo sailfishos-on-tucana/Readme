@@ -62,9 +62,11 @@ echo "Downloading from $URL/$KICKSTART"
 #rm -rf $TMPWORKDIR/rpm/
 curl "$URL/$KICKSTART" --output - | rpm2cpio - | cpio -idmv -D $TMPWORKDIR/rpm/
 
-cp $TMPWORKDIR/rpm/usr/share/kickstarts/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks $OUTPUTDIR/
+# make gz not bz2
+sed -e "s/\.bz2/\.gz/g" $TMPWORKDIR/rpm/usr/share/kickstarts/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks > $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks
+
 echo "Creating mic with $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks "
-sudo mic create loop --arch=$PORT_ARCH \
+sudo mic create fs --pack-to=sfe-$DEVICE-$RELEASE-$EXTRA_NAME.tar.gz --arch=$PORT_ARCH \
  --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE \
  --record-pkgs=name,url --outdir=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME \
  $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks 
