@@ -1,7 +1,5 @@
 # Sailfish on tucana
 
-This repository is for bugs and docs.
-
 # Installing
 Installing requires unlocking your device and installing [TWRP](https://twrp.me/xiaomi/xiaomiminote10.html).
 Your device will probably be out of warranty.
