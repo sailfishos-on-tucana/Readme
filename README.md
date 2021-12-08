@@ -13,12 +13,18 @@ Next you can install this Lineage 17.1 build: https://forum.xda-developers.com/t
 (or use mine, https://1drv.ms/u/s!Alh0arVfv0RwirZ7aGrClFPS1kXTqw?e=7JhQVY - the only difference is that mine uses the OSS kernel, but we will replace this next).
 
 
+## Beta2
+<details>
+  <summary>Beta version 2021-10-08</summary>
+</details>
+This [beta version](https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.2.0.21) is installed by pushing the zip to the device and using the TWRP install zip option.
+
 ## Prerelease
 <details>
 <summary>Prerelease version 2021-08-10</summary>
-</details>
 
 The [prerelease version](https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.1.0.24-prerelease) (that is, you get all the [issues](https://github.com/sailfishos-on-tucana/Readme/issues)) is installed by pushing the zip to the device and using the TWRP install zip option.
+</details>
 
 ## Alpha
 <details>
