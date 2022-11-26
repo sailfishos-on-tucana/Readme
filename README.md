@@ -12,9 +12,17 @@ Both of the Xiaomi firmwares above will replace TWRP - but the latter will allow
 Next you can install this Lineage 17.1 build: https://forum.xda-developers.com/t/deprecated-rom-10-unofficial-tucana-lineageos17-1.4196085/
 (or use mine, https://1drv.ms/u/s!Alh0arVfv0RwirZ7aGrClFPS1kXTqw?e=7JhQVY - the only difference is that mine uses the OSS kernel, but we will replace this next).
 
+## Pre-release
+https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.4.0.72-camfix
+Installed by pushing the zip to the device and using the TWRP install zip option.
+
+
 ## Beta3
+<details>
+  <summary>Beta version 2021-12-09</summary>
 https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.3.0.15-beta-3
 Installed by pushing the zip to the device and using the TWRP install zip option.
+</details>
 
 ## Beta2
 <details>
@@ -22,7 +30,7 @@ Installed by pushing the zip to the device and using the TWRP install zip option
 This [beta version](https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.2.0.21) is installed by pushing the zip to the device and using the TWRP install zip option.
 </details>
 
-## Prerelease
+## Prerelease-0
 <details>
 <summary>Prerelease version 2021-08-10</summary>
 
