@@ -1,5 +1,7 @@
 # Sailfish on tucana
 
+This org contains all sources to build Sailfish OS for Mi Note 10, except the kernel that is in this branch: https://github.com/b100dian/Xiaomi_Kernel_OpenSource/tree/tucana-hybris-17.1
+
 # Installing
 Installing requires unlocking your device and installing [TWRP](https://twrp.me/xiaomi/xiaomiminote10.html).
 Your device will probably be out of warranty.
