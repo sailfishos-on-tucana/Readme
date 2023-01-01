@@ -37,3 +37,5 @@ jobs:
     - name: Update release
       run: |
         gh release upload ${{ github.ref_name }} output/mic/sfe-*/*.zip --clobber 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
