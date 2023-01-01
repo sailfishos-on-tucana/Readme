@@ -9,12 +9,6 @@ on:
 
 env:
   RELEASESDK: 4.3.0.12
-  PLATFORM_SDK_ROOT: "/srv/mer"
-  ANDROID_ROOT: "/parentroot/srv/hadk"
-  VENDOR: "xiaomi"
-  DEVICE: "tucana"
-  PORT_ARCH: "aarch64"
-
 
 jobs:
   build:
@@ -31,7 +25,7 @@ jobs:
       run: |
         export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
         export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
-        export EXTRA_NAME=$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
+        export EXTRA_NAME=-$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
         docker run --rm --privileged -v $PWD:/share --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c "
             mkdir -p build ;
             cd build ;
@@ -43,6 +37,6 @@ jobs:
     - name: Upload build result
       uses: actions/upload-artifact@v2
       with:
-        name: mic/sailfishos-*.zip 
-        path: output
+        name: sfe-*/*.zip
+        path: output/mic
 
