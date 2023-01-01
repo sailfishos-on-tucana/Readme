@@ -32,7 +32,7 @@ jobs:
         export VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
         export RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
         export EXTRA_NAME=$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
-        docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$RELEASESDK -env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME /bin/bash -c "
+        docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$RELEASESDK --env-file env.list -e VERSION -e RELEASE -e EXTRA_NAME /bin/bash -c "
             mkdir -p build ;
             cd build ;
             cp -r /share/. . ;
