@@ -35,7 +35,7 @@ jobs:
             mkdir -p build ;
             cd build ;
             cp -r /share/. . ;
-            ./scripts/create-image.sh --release $RELEASE --version $VERSION
+            VENDOR="xiaomi" DEVICE="tucana" PORT_ARCH="aarch64" ./scripts/create-image.sh --release $RELEASE --version $VERSION
             sudo cp -r sfe*.zip /share/output"
 
     - name: Upload build result
