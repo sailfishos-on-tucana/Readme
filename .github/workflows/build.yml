@@ -38,11 +38,11 @@ jobs:
             cp -r /share/. . ;
             sudo zypper -n in kmod
             ./scripts/create-image.sh --release $RELEASE --version $VERSION
-            sudo cp -r sfe*.zip /share/output"
+            sudo cp -r mic/. /share/output/mic"
 
     - name: Upload build result
       uses: actions/upload-artifact@v2
       with:
-        name: sfe*.zip
+        name: mic/sailfishos-*.zip 
         path: output
 
