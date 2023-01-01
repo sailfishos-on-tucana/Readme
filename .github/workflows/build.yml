@@ -36,7 +36,7 @@ jobs:
             mkdir -p build ;
             cd build ;
             cp -r /share/. . ;
-            sudo zypper in kmod
+            sudo zypper -n in kmod
             ./scripts/create-image.sh --release $RELEASE --version $VERSION
             sudo cp -r sfe*.zip /share/output"
 
