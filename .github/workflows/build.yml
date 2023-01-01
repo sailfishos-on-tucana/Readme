@@ -34,9 +34,8 @@ jobs:
             ./scripts/create-image.sh --release $RELEASE --version $VERSION
             sudo cp -r mic/. /share/output/mic"
 
-    - name: Update release
-      uses: johnwbyrd/update-release@v1
+    - name: Upload build result
+      uses: actions/upload-artifact@v3
       with:
-        release: ${{ github.ref_name }} 
-        token: ${{ secrets.GITHUB_TOKEN }}
-        asset: output/mic/sfe-*/*.zip
+        name: ${{ github.ref_name }}.zip
+        path: output/mic/sfe-*/*.zip
