@@ -1,0 +1,47 @@
+name: Github CI build
+
+# GITHUB_REF_NAME in the form of release-$VERSION-$RELEASE-$EXTRA_NAME
+
+on:
+  push:
+    tags:
+      - release-**-**-**
+
+env:
+  RELEASESDK: 4.3.0.12
+  PLATFORM_SDK_ROOT: "/srv/mer"
+  ANDROID_ROOT: "/parentroot/srv/hadk"
+  VENDOR: "xiaomi"
+  DEVICE: "tucana"
+  PORT_ARCH: "aarch64"
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Prepare
+      env:
+      run: |
+        mkdir output
+
+    - name: Build mic
+      run: docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk:$RELEASESDK /bin/bash -c "
+            VERSION=$(echo $GITHUB_REF_NAME | cut -d "-" -f 2)
+            RELEASE=$(echo $GITHUB_REF_NAME | cut -d "-" -f 3)
+            EXTRA_NAME=$(echo $GITHUB_REF_NAME | cut -d "-" -f 4-)
+            mkdir -p build ;
+            cd build ;
+            cp -r /share/. . ;
+            ./scripts/create-image.sh --release $RELEASE --version $VERSION
+            sudo cp -r sfe*.zip /share/output"
+
+    - name: Upload build result
+      uses: actions/upload-artifact@v2
+      with:
+        name: sfe*.zip
+        path: output
+
