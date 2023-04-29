@@ -50,17 +50,17 @@ mkdir -p $OUTPUTDIR
 
 echo "Downloading from $URL/repodata/repomd.xml"
 # Removing the xmlns from the xml as default namespace is almost unusable.
-curl "$URL/repodata/repomd.xml" --output - | sed -e 's/xmlns=".*"//g' > $TMPWORKDIR/repomd.xml
+curl -L "$URL/repodata/repomd.xml" --output - | sed -e 's/xmlns=".*"//g' > $TMPWORKDIR/repomd.xml
 PRIMARY=$(xmllint --xpath "string(/repomd/data[@type='primary']/location/@href)" $TMPWORKDIR/repomd.xml)
 
 echo "Downloading from $URL/$PRIMARY"
-curl "$URL/$PRIMARY" --output - | gunzip > $TMPWORKDIR/primary.xml
+curl -L "$URL/$PRIMARY" --output - | gunzip > $TMPWORKDIR/primary.xml
 # Got away without referencing elements from default namespace, attributes work.
 KICKSTART=$(xmllint --xpath "string(//*[contains(@href, 'droid-config-$DEVICE-ssu-kickstarts')]/@href)" $TMPWORKDIR/primary.xml)
 
 echo "Downloading from $URL/$KICKSTART"
 #rm -rf $TMPWORKDIR/rpm/
-curl "$URL/$KICKSTART" --output - | rpm2cpio - | cpio -idmv -D $TMPWORKDIR/rpm/
+curl -L "$URL/$KICKSTART" --output - | rpm2cpio - | cpio -idmv -D $TMPWORKDIR/rpm/
 
 # make gz not bz2
 sed -e "s/\.bz2/\.gz/g" $TMPWORKDIR/rpm/usr/share/kickstarts/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks > $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks
