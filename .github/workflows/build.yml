@@ -8,7 +8,7 @@ on:
       - release-**-**-**
 
 env:
-  RELEASESDK: 4.4.0.68
+  RELEASESDK: 4.5.0.16
 
 jobs:
   build:
