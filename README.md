@@ -15,10 +15,23 @@ Next you can install this Lineage 17.1 build: https://forum.xda-developers.com/t
 (or use mine, https://1drv.ms/u/s!Alh0arVfv0RwirZ7aGrClFPS1kXTqw?e=7JhQVY - the only difference is that mine uses the OSS kernel, but we will replace this next).
 
 ## Pre-release
-(Building 4.5.0 as we speak.)
+(Building 4.6.0 EA as we speak.)
 
+https://github.com/sailfishos-on-tucana/Readme/releases/tag/release-testing-4.5.0.21-droidmedia
+Installed by pushing the zip to the device and using the TWRP install zip option.
+
+## Previous Pre-releases
+<details>
+  <summary>Pre-release version 2023-08-02</summary>
 https://github.com/sailfishos-on-tucana/Readme/releases/tag/4.4.0.72-prerelease
 Installed by pushing the zip to the device and using the TWRP install zip option.
+</details>
+
+<details>
+  <summary>Pre-release version 2023-04-29</summary>
+https://github.com/sailfishos-on-tucana/Readme/releases/tag/release-testing-4.5.0.19-hybris48
+  Installed by pushing the zip to the device and using the TWRP install zip option.
+</details>
 
 
 ## Beta3
