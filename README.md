@@ -15,12 +15,14 @@ Next you can install this Lineage 17.1 build: https://forum.xda-developers.com/t
 (or use mine, https://1drv.ms/u/s!Alh0arVfv0RwirZ7aGrClFPS1kXTqw?e=7JhQVY - the only difference is that mine uses the OSS kernel, but we will replace this next).
 
 ## Pre-release
-(Building 4.6.0 final as we speak.)
+https://github.com/sailfishos-on-tucana/Readme/releases/tag/release-testing-4.6.0.13-pre
+Sailfish OS 4.6.0
+
+## Previous Pre-releases
 https://github.com/sailfishos-on-tucana/Readme/releases/tag/release-testing-4.6.0.11-usbmoded3
 Early access 4.6.0.
 Installed by pushing the zip to the device and using the TWRP install zip option.
 
-## Previous Pre-releases
 <details>
   <summary>Pre-release version 2023-08-02</summary>
 https://github.com/sailfishos-on-tucana/Readme/releases/tag/release-testing-4.5.0.21-droidmedia
