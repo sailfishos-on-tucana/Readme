@@ -67,6 +67,6 @@ sed -e "s/\.bz2/\.gz/g" $TMPWORKDIR/rpm/usr/share/kickstarts/Jolla-\@RELEASE\@-$
 
 echo "Creating mic with $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks "
 sudo mic create fs --pack-to=sfe-$DEVICE-$RELEASE$EXTRA_NAME.tar.gz --arch=$PORT_ARCH \
- --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE \
+ --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE,RELEASEMAJORMINOR:$RELEASE \
  --record-pkgs=name,url --outdir=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME \
  $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks 
