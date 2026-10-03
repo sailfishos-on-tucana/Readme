@@ -4,7 +4,7 @@ set -e
 # Creates an image under mic/fe-$DEVICE-$RELEASE$EXTRA_NAME 
 # after downloading the kickstart file from the testing or devel repo.	
 
-VERSION=devel
+VERSION=testing
 RELEASE=""
 
 while :; do
@@ -70,4 +70,4 @@ echo "Creating mic with $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks "
 mic create fs --pack-to=sfe-$DEVICE-$RELEASE$EXTRA_NAME.tar.gz --arch=$PORT_ARCH \
  --tokenmap=ARCH:$PORT_ARCH,RELEASE:$RELEASE,EXTRA_NAME:$EXTRA_NAME,DEVICEMODEL:$DEVICE,RELEASEMAJORMINOR:$RELEASEMAJORMINOR \
  --record-pkgs=name,url --outdir=$OUTPUTDIR/sfe-$DEVICE-$RELEASE$EXTRA_NAME \
- $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks 
+ $OUTPUTDIR/Jolla-\@RELEASE\@-$DEVICE-\@ARCH\@.ks
