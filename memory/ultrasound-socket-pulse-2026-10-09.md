@@ -120,10 +120,48 @@ Crash backtrace: `rich-core-extract /var/cache/core-dumps/<pulseaudio...>.rcore.
   0755 root at the next boot.
 - Do **not** go back to enabling `vendor.audio-hal-2-0`/audioserver: that brings back the two-HAL-copies problem.
 
+## How we found it (method, reusable for other blobs)
+
+1. **Open-source code can mislead.** The open CAF HAL (`hardware/qcom-caf/msm8998/audio/hal/audio_hw.c`)
+   starts ultrasound via `set_parameters("ultrasound-sensor=1")`, which first suggested an
+   audioserver/AudioFlinger path. Wrong for this device.
+2. **Grep the vendor image itself.** `grep -rl -a "ultrasound-sensor"` over vendor: zero hits, so Xiaomi's HAL
+   differs. Searching by name (`find -iname "*ellip*"`) found `sensors.elliptic.so` and `etc/elliptic_sensor.xml`
+   with `audio_notify="ultrasound-proximity"`, which means the sensor HAL notifies the audio side.
+3. **Follow the dependencies.** `readelf -d sensors.elliptic.so | grep NEEDED` leads to `libnotifyaudiohal.so`,
+   which leads to `libultrasound.so`. `strings` showed `libnotifyaudiohal` builds the `ultrasound-proximity=1/0`
+   messages.
+4. **The socket calls a library imports tell you its direction.** `libultrasound.so` imports
+   `socket`/`connect`/`close` and has `/dev/socket/audio_hw_socket`, `clientConnect`, `clientRequest`, but no
+   `bind`/`listen`/`accept`, so it is a **client**. `audio.primary.sm6150.so` has `android_get_control_socket`,
+   `listen`, `accept`, so it is the **server**.
+5. **`android_get_control_socket` means init creates the socket.** It never creates a socket; it takes the one
+   init passed in through `ANDROID_SOCKET_<name>`. So: `grep -rn audio_hw_socket vendor/etc/init` found the
+   single `socket audio_hw_socket ...` line on `vendor.audio-hal-2-0`.
+6. **That explained the old workaround:** audio-hal-2-0 is the only process that gets the socket. audioserver is
+   needed because the HIDL service loads the HAL only when a client calls `openDevice`. PulseAudio (jb2q) loads
+   the same `.so` in-process, so there were two HAL copies. That this caused the lost call audio is an inference
+   that fits the symptoms; it was never proven with a trace.
+7. **Logs confirmed both ends:** PulseAudio's HAL copy logged `audio_hal_con_thread_start con->socket_server_fdr -1`
+   (it wanted the socket and got none); the sensors HAL pid logged `clientConnect ... No such file or directory`.
+   After the fix: `audio_hw_con: add_client accept client connect`.
+8. **Source code gave the exact requirements:** libcutils `sockets_unix.cpp` (valid fd + exact `getsockname()`
+   path), PulseAudio `main.c` (closes all inherited fds except systemd's and `PULSE_PASSED_FD`), libhybris
+   `hooks.c` (`getenv` goes to glibc).
+9. **The startup crash came from testing, not analysis:** the kernel `[ELUS]`/`afe_start_pseudo_port` lines right
+   before the PulseAudio SIGSEGV pointed to a request waiting while PulseAudio was still starting. Restarting
+   `sensorfwd` once PulseAudio was up confirmed it.
+
+Rules of thumb:
+- For an unknown socket, imports decide the side: `connect` means client, `listen`/`accept` means server.
+- `android_get_control_socket` or `ANDROID_SOCKET_` in a blob means the socket comes from init, so find the
+  `socket` line in the init scripts. Whoever owns it on stock has to be replaced by something that hands
+  over an fd.
+- Check CAF/AOSP HAL sources against the vendor blob's `strings` before relying on them.
+
 ## Open items
 
 - A request made during PulseAudio startup is lost (by design); fine with mce on-demand, which activates only in calls.
 - Persist mce on-demand=enabled, or find out what set it to disabled.
 - `Mi_Ultrasound Calibration Data` mixer control is missing in the kernel; check whether proximity accuracy suffers.
-- `hybris/mw/audio-hw-socket` is a fresh `git init` with nothing committed yet; it needs a commit and tag
-  (mb2 sets the version from git) and an OBS package. The spec's `License:` is a placeholder (BSD-3-Clause).
+- `hybris/mw/audio-hw-socket` is a fresh `git init` published here https://github.com/sailfishos-on-tucana/audio-hw-socket
